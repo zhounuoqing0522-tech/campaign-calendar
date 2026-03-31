@@ -1,0 +1,169 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="2685.4">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 13.0px Courier; -webkit-text-stroke: #000000}
+    span.s1 {font-kerning: none}
+  </style>
+</head>
+<body>
+<p class="p1"><span class="s1">&lt;!DOCTYPE html&gt;</span></p>
+<p class="p1"><span class="s1">&lt;html lang="zh"&gt;</span></p>
+<p class="p1"><span class="s1">&lt;head&gt;</span></p>
+<p class="p1"><span class="s1">&lt;meta charset="UTF-8"&gt;</span></p>
+<p class="p1"><span class="s1">&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;</span></p>
+<p class="p1"><span class="s1">&lt;title&gt;活动日历 - 甘特图&lt;/title&gt;</span></p>
+<p class="p1"><span class="s1">&lt;style&gt;</span></p>
+<p class="p1"><span class="s1">* { box-sizing: border-box; margin: 0; padding: 0; }</span></p>
+<p class="p1"><span class="s1">body { font-family: 'PingFang SC', 'Microsoft YaHei', system-ui, sans-serif; background: #f1f5f9; color: #1e293b; min-height: 100vh; }</span></p>
+<p class="p1"><span class="s1">.header { background: #0f172a; color: white; padding: 16px 24px; display: flex; align-items: center; gap: 12px; }</span></p>
+<p class="p1"><span class="s1">.header h1 { font-size: 18px; font-weight: 600; }</span></p>
+<p class="p1"><span class="s1">.filter-bar { background: white; border-bottom: 1px solid #e2e8f0; padding: 16px 24px; }</span></p>
+<p class="p1"><span class="s1">.filter-row { display: flex; flex-wrap: wrap; gap: 16px; align-items: center; margin-bottom: 12px; }</span></p>
+<p class="p1"><span class="s1">.filter-row:last-child { margin-bottom: 0; }</span></p>
+<p class="p1"><span class="s1">.filter-label { font-size: 13px; color: #64748b; font-weight: 500; min-width: 60px; }</span></p>
+<p class="p1"><span class="s1">.filter-group { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }</span></p>
+<p class="p1"><span class="s1">.filter-btn { padding: 5px 12px; border-radius: 6px; border: 1.5px solid #e2e8f0; background: white; font-size: 12px; cursor: pointer; transition: all 0.15s; color: #475569; font-family: inherit; }</span></p>
+<p class="p1"><span class="s1">.filter-btn:hover { border-color: #3b82f6; color: #3b82f6; }</span></p>
+<p class="p1"><span class="s1">.filter-btn.active { background: #3b82f6; border-color: #3b82f6; color: white; }</span></p>
+<p class="p1"><span class="s1">select, input { padding: 5px 10px; border: 1.5px solid #e2e8f0; border-radius: 6px; font-size: 12px; font-family: inherit; color: #475569; background: white; cursor: pointer; outline: none; }</span></p>
+<p class="p1"><span class="s1">select:focus, input:focus { border-color: #3b82f6; }</span></p>
+<p class="p1"><span class="s1">.stats-bar { display: flex; gap: 12px; padding: 12px 24px; background: white; border-bottom: 1px solid #e2e8f0; flex-wrap: wrap; }</span></p>
+<p class="p1"><span class="s1">.stat-chip { display: flex; align-items: center; gap: 6px; font-size: 12px; color: #64748b; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; padding: 6px 12px; }</span></p>
+<p class="p1"><span class="s1">.stat-dot { width: 8px; height: 8px; border-radius: 50%; }</span></p>
+<p class="p1"><span class="s1">.gantt-wrapper { padding: 20px 24px; overflow-x: auto; }</span></p>
+<p class="p1"><span class="s1">.gantt-container { background: white; border-radius: 12px; border: 1px solid #e2e8f0; overflow: hidden; min-width: 1000px; }</span></p>
+<p class="p1"><span class="s1">.gantt-header { display: flex; border-bottom: 2px solid #e2e8f0; background: #f8fafc; }</span></p>
+<p class="p1"><span class="s1">.gantt-labels-col { width: 220px; min-width: 220px; padding: 10px 16px; font-size: 12px; font-weight: 600; color: #64748b; border-right: 2px solid #e2e8f0; }</span></p>
+<p class="p1"><span class="s1">.gantt-dates-header { flex: 1; display: flex; }</span></p>
+<p class="p1"><span class="s1">.date-cell { flex: 1; text-align: center; padding: 8px 4px; font-size: 10px; color: #64748b; font-weight: 500; border-right: 1px solid #e2e8f0; min-width: 32px; }</span></p>
+<p class="p1"><span class="s1">.date-cell.today { background: #eff6ff; color: #2563eb; font-weight: 700; }</span></p>
+<p class="p1"><span class="s1">.date-cell.weekend { color: #94a3b8; background: #fafafa; }</span></p>
+<p class="p1"><span class="s1">.gantt-row { display: flex; border-top: 1px solid #f1f5f9; align-items: center; transition: background 0.1s; }</span></p>
+<p class="p1"><span class="s1">.gantt-row:hover { background: #fafbff; }</span></p>
+<p class="p1"><span class="s1">.gantt-row.hidden { display: none; }</span></p>
+<p class="p1"><span class="s1">.gantt-row-label { width: 220px; min-width: 220px; padding: 8px 16px; border-right: 2px solid #e2e8f0; font-size: 12px; }</span></p>
+<p class="p1"><span class="s1">.row-name { font-weight: 500; color: #1e293b; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 180px; }</span></p>
+<p class="p1"><span class="s1">.row-meta { font-size: 10px; color: #94a3b8; margin-top: 2px; }</span></p>
+<p class="p1"><span class="s1">.gantt-row-bars { flex: 1; position: relative; height: 42px; display: flex; align-items: center; }</span></p>
+<p class="p1"><span class="s1">.bar { position: absolute; height: 24px; border-radius: 4px; display: flex; align-items: center; padding: 0 6px; font-size: 10px; font-weight: 500; color: white; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; cursor: pointer; z-index: 1; transition: filter 0.15s, transform 0.1s; box-shadow: 0 1px 3px rgba(0,0,0,0.12); }</span></p>
+<p class="p1"><span class="s1">.bar:hover { filter: brightness(1.1); transform: scaleY(1.08); z-index: 10; }</span></p>
+<p class="p1"><span class="s1">.tooltip { position: fixed; background: #0f172a; color: white; padding: 10px 14px; border-radius: 8px; font-size: 11px; pointer-events: none; z-index: 1000; opacity: 0; transition: opacity 0.15s; max-width: 240px; box-shadow: 0 4px 16px rgba(0,0,0,0.3); }</span></p>
+<p class="p1"><span class="s1">.tooltip.visible { opacity: 1; }</span></p>
+<p class="p1"><span class="s1">.tooltip-title { font-weight: 600; margin-bottom: 4px; font-size: 12px; }</span></p>
+<p class="p1"><span class="s1">.tooltip-row { color: #94a3b8; margin-top: 2px; }</span></p>
+<p class="p1"><span class="s1">.tooltip-row span { color: white; }</span></p>
+<p class="p1"><span class="s1">.empty-state { text-align: center; padding: 40px; color: #94a3b8; font-size: 14px; }</span></p>
+<p class="p1"><span class="s1">&lt;/style&gt;</span></p>
+<p class="p1"><span class="s1">&lt;/head&gt;</span></p>
+<p class="p1"><span class="s1">&lt;body&gt;</span></p>
+<p class="p1"><span class="s1">&lt;div class="header"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>&lt;span style="font-size:20px"&gt;📅&lt;/span&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>&lt;h1&gt;活动日历甘特图&lt;/h1&gt;</span></p>
+<p class="p1"><span class="s1">&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1">&lt;div class="filter-bar"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>&lt;div class="filter-row"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;span class="filter-label"&gt;🌐 区域&lt;/span&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;div class="filter-group" id="regionFilters"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>&lt;button class="filter-btn active" onclick="setFilter('region','all',this)"&gt;全部&lt;/button&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>&lt;button class="filter-btn" onclick="setFilter('region','global',this)"&gt;Global&lt;/button&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>&lt;button class="filter-btn" onclick="setFilter('region','asia',this)"&gt;亚洲&lt;/button&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>&lt;button class="filter-btn" onclick="setFilter('region','europe',this)"&gt;欧洲&lt;/button&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>&lt;button class="filter-btn" onclick="setFilter('region','americas',this)"&gt;美洲&lt;/button&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>&lt;div class="filter-row"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;span class="filter-label"&gt;📊 部分&lt;/span&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;div class="filter-group" id="partFilters"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>&lt;button class="filter-btn active" onclick="setFilter('part','all',this)"&gt;全部&lt;/button&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>&lt;button class="filter-btn" onclick="setFilter('part','growth',this)"&gt;User Growth&lt;/button&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>&lt;button class="filter-btn" onclick="setFilter('part','monetize',this)"&gt;Monetization&lt;/button&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>&lt;button class="filter-btn" onclick="setFilter('part','ops',this)"&gt;Operations&lt;/button&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>&lt;div class="filter-row"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;span class="filter-label"&gt;🏢 部门&lt;/span&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;select id="deptFilter" onchange="renderGantt()"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>&lt;option value="all"&gt;全部部门&lt;/option&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>&lt;optgroup label="核心部门"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;option value="SBU"&gt;SBU&lt;/option&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;option value="DBU"&gt;DBU&lt;/option&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;option value="Earn"&gt;Earn&lt;/option&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;option value="FlatTeam"&gt;Flat Team&lt;/option&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;option value="BBU"&gt;BBU&lt;/option&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>&lt;/optgroup&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>&lt;optgroup label="支付&amp;卡"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;option value="PBUCard"&gt;PBU - Card&lt;/option&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;option value="PBUBybit"&gt;PBU - Bybit Pay&lt;/option&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>&lt;/optgroup&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>&lt;optgroup label="增长&amp;运营"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;option value="GPT"&gt;Growth Product Team&lt;/option&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;option value="MarketingOps"&gt;Marketing Ops&lt;/option&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;option value="PaidMedia"&gt;Paid Media&lt;/option&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;option value="BUIDL"&gt;Marketing BUIDL&lt;/option&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>&lt;/optgroup&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>&lt;optgroup label="风控&amp;财务"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;option value="TradingRisk"&gt;Trading Risk&lt;/option&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;option value="Finance"&gt;Finance&lt;/option&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;option value="Legal"&gt;Legal &amp; Compliance&lt;/option&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>&lt;/optgroup&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>&lt;optgroup label="技术支撑"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;option value="UED"&gt;UED&lt;/option&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;option value="BI"&gt;Business Intelligence&lt;/option&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;option value="ABU"&gt;ABU&lt;/option&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;option value="Infra"&gt;Infra&lt;/option&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;option value="CentralHub"&gt;Central Hub&lt;/option&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;option value="UnifiedQuality"&gt;Unified Quality&lt;/option&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;option value="UnifiedFrontend"&gt;Unified Frontend&lt;/option&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;option value="Security"&gt;Security&lt;/option&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;option value="GroupRisk"&gt;Group Risk&lt;/option&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;option value="BigData"&gt;Big Data&lt;/option&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;option value="BlockchainRD"&gt;Blockchain R&amp;D&lt;/option&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;option value="FlatRD"&gt;Flat R&amp;D&lt;/option&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;option value="CentralAsset"&gt;Central Asset&lt;/option&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;option value="AI"&gt;AI&lt;/option&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>&lt;/optgroup&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>&lt;optgroup label="其他职能"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;option value="ClientServices"&gt;Client Services&lt;/option&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;option value="VIP"&gt;VIP&lt;/option&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;option value="BD"&gt;BD&lt;/option&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;option value="InternalAudit"&gt;Internal Audit&lt;/option&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;option value="IT"&gt;IT&lt;/option&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;option value="People"&gt;People&lt;/option&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>&lt;/optgroup&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;/select&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>&lt;div class="filter-row"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;span class="filter-label"&gt;📆 时间&lt;/span&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;div class="filter-group"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>&lt;input type="date" id="startDate" value="2026-04-01" onchange="renderGantt()"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>&lt;span style="color:#94a3b8"&gt;到&lt;/span&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>&lt;input type="date" id="endDate" value="2026-04-30" onchange="renderGantt()"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1">&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1">&lt;div class="stats-bar" id="statsBar"&gt;&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1">&lt;div class="gantt-wrapper"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>&lt;div class="gantt-container" id="ganttContainer"&gt;&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1">&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1">&lt;div class="tooltip" id="tooltip"&gt;&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1">&lt;script&gt;</span></p>
+<p class="p1"><span class="s1">const regions = {India:'asia',UK:'europe',Kazakhstan:'asia',Georgia:'europe',Spain:'europe',Turkey:'europe',Latam:'americas',Indonesia:'asia',Portugal:'europe',MENA:'europe',MiniEU:'europe',France:'europe',Germany:'europe',Africa:'europe',SEA:'asia',CzechSlovak:'europe',Korea:'asia',Netherlands:'europe',Poland:'europe',Nordics:'europe',Brazil:'americas',CIS:'europe',Vietnam:'asia',Italy:'europe',Mandarin:'asia'};</span></p>
+<p class="p1"><span class="s1">const parts={'User Growth':'growth','Monetization':'monetize','Operations':'ops'};</span></p>
+<p class="p1"><span class="s1">let campaigns=[{id:1,name:'Q2品牌推广',dept:'MarketingOps',region:'Global',part:'User Growth',start:'2026-04-01',end:'2026-04-30'},{id:2,name:'亚洲市场活动',dept:'SBU',region:'India',part:'User Growth',start:'2026-04-05',end:'2026-04-20'},{id:3,name:'欧洲运营活动',dept:'DBU',region:'UK',part:'Operations',start:'2026-04-10',end:'2026-04-25'},{id:4,name:'拉新激励',dept:'GPT',region:'Brazil',part:'User Growth',start:'2026-04-12',end:'2026-04-30'},{id:5,name:'支付产品发布',dept:'PBUCard',region:'Global',part:'Monetization',start:'2026-04-15',end:'2026-05-05'}];</span></p>
+<p class="p1"><span class="s1">let activeRegion='all',activePart='all';</span></p>
+<p class="p1"><span class="s1">function setFilter(type,value,el){if(type==='region'){activeRegion=value;document.querySelectorAll('#regionFilters .filter-btn').forEach(b=&gt;b.classList.remove('active'));}else if(type==='part'){activePart=value;document.querySelectorAll('#partFilters .filter-btn').forEach(b=&gt;b.classList.remove('active'));}el.classList.add('active');renderGantt();}</span></p>
+<p class="p1"><span class="s1">function renderGantt(){const dept=document.getElementById('deptFilter').value;const startDate=new Date(document.getElementById('startDate').value);const endDate=new Date(document.getElementById('endDate').value);const daysDiff=Math.ceil((endDate-startDate)/(86400000))+1;let filtered=campaigns.filter(c=&gt;{const cStart=new Date(c.start);const cEnd=new Date(c.end);if(activeRegion!=='all'&amp;&amp;(c.region==='Global'?'global':regions[c.region]||'global')!==activeRegion)return false;if(activePart!=='all'&amp;&amp;parts[c.part]!==activePart)return false;if(dept!=='all'&amp;&amp;c.dept!==dept)return false;if(cEnd&lt;startDate||cStart&gt;endDate)return false;return true;});const statsBar=document.getElementById('statsBar');const today=new Date();const running=filtered.filter(c=&gt;new Date(c.start)&lt;=today&amp;&amp;new Date(c.end)&gt;=today).length;statsBar.innerHTML=`&lt;div class="stat-chip"&gt;&lt;div class="stat-dot" style="background:#64748b"&gt;&lt;/div&gt;共 &lt;strong&gt;${filtered.length}&lt;/strong&gt; 个活动&lt;/div&gt;&lt;div class="stat-chip"&gt;&lt;div class="stat-dot" style="background:#ef4444"&gt;&lt;/div&gt;进行中 &lt;strong&gt;${running}&lt;/strong&gt;&lt;/div&gt;&lt;div class="stat-chip"&gt;&lt;div class="stat-dot" style="background:#f59e0b"&gt;&lt;/div&gt;即将开始 &lt;strong&gt;${filtered.length-running}&lt;/strong&gt;&lt;/div&gt;`;const container=document.getElementById('ganttContainer');if(filtered.length===0){container.innerHTML='&lt;div class="empty-state"&gt;🔍 没有匹配的活动&lt;/div&gt;';return;}let html='&lt;div class="gantt-header"&gt;&lt;div class="gantt-labels-col"&gt;活动&lt;/div&gt;&lt;div class="gantt-dates-header"&gt;';for(let i=0;i&lt;daysDiff;i++){const d=new Date(startDate);d.setDate(d.getDate()+i);const day=d.getDate();const dow=d.getDay();const isWeekend=dow===0||dow===6;html+=`&lt;div class="date-cell${isWeekend?' weekend':''}"&gt;${day}&lt;/div&gt;`;}html+='&lt;/div&gt;&lt;/div&gt;';const colorMap={SBU:'#3b82f6',DBU:'#22c55e',GPT:'#f59e0b',PBUCard:'#a855f7',MarketingOps:'#ec4899'};filtered.forEach(c=&gt;{const cStart=new Date(c.start);const cEnd=new Date(c.end);const offsetStart=Math.max(0,Math.ceil((cStart-startDate)/86400000));const offsetEnd=Math.min(daysDiff,Math.ceil((cEnd-startDate)/86400000)+1);const width=((offsetEnd-offsetStart)/daysDiff)*100;const left=(offsetStart/daysDiff)*100;const color=colorMap[c.dept]||'#64748b';html+=`&lt;div class="gantt-row"&gt;&lt;div class="gantt-row-label"&gt;&lt;div class="row-name"&gt;${c.name}&lt;/div&gt;&lt;div class="row-meta"&gt;${c.dept} · ${c.region}&lt;/div&gt;&lt;/div&gt;&lt;div class="gantt-row-bars"&gt;&lt;div class="bar" style="left:${left}%;width:${width}%;background:${color};" onmouseenter="showTooltip(event,'${c.name}','${c.dept}','${c.region}','${c.start}','${c.end}')" onmouseleave="hideTooltip()"&gt;${width&gt;8?c.name:''}&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;`;});container.innerHTML=html;}</span></p>
+<p class="p1"><span class="s1">function showTooltip(e,name,dept,region,start,end){const tip=document.getElementById('tooltip');tip.innerHTML=`&lt;div class="tooltip-title"&gt;${name}&lt;/div&gt;&lt;div class="tooltip-row"&gt;部门：&lt;span&gt;${dept}&lt;/span&gt;&lt;/div&gt;&lt;div class="tooltip-row"&gt;地区：&lt;span&gt;${region}&lt;/span&gt;&lt;/div&gt;&lt;div class="tooltip-row"&gt;时间：&lt;span&gt;${start} ~ ${end}&lt;/span&gt;&lt;/div&gt;`;tip.classList.add('visible');tip.style.left=(e.clientX+14)+'px';tip.style.top=(e.clientY+14)+'px';}</span></p>
+<p class="p1"><span class="s1">function hideTooltip(){document.getElementById('tooltip').classList.remove('visible');}</span></p>
+<p class="p1"><span class="s1">renderGantt();</span></p>
+<p class="p1"><span class="s1">&lt;/script&gt;</span></p>
+<p class="p1"><span class="s1">&lt;/body&gt;</span></p>
+<p class="p1"><span class="s1">&lt;/html&gt;</span></p>
+</body>
+</html>
